@@ -1,0 +1,23 @@
+{
+  "name": "simple-2d-space-shooter-game-prototype",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "José Alberto Córdoba Lugo",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-browserify": "^0.5.1",
+    "gulp-pug": "^3.3.0",
+    "gulp-rimraf": "^0.2.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-typescript": "^3.2.3",
+    "typescript": "^2.6.1"
+  }
+}
