@@ -12,6 +12,8 @@ const nave = {
 }
 
 let teclado : any = {}
+//Array para disparos
+let disparos : Array<any> = [];
 
 //Definicion de variables para imagenes
 let fondo : any;
@@ -48,11 +50,52 @@ function moverNave() : void {
         nave.x += 6;
         if(nave.x > limite) nave.x = limite;
     }
+    if(teclado[32]) {
+        //Disparos
+        console.log(teclado);
+        if(!teclado.fire) {
+            fire();
+            teclado.fire = true
+        }
+    } else teclado.fire = false;
+}
+
+function moverDisparos() : void {
+    for(let i in disparos) {
+        const disparo = disparos[i];
+        disparo.y -= 2;
+    }
+    //Elimina disparo en posicion 0 en y
+    disparos = disparos.filter(disparo => {
+        return disparo.y > 0;
+    })
+}
+
+//Agregar disparos
+function fire() {
+    disparos.push({
+        x: nave.x + 20,
+        y: nave.y -10,
+        width: 10,
+        height: 30
+    })
+}
+
+function dibujarDisparos() : void {
+    ctx.save();
+    ctx.fillStyle = 'white';
+    for(let i in disparos){
+        const disparo = disparos[i];
+        ctx.fillRect(disparo.x, disparo.y, disparo.width, disparo.height);
+    }
+    ctx.restore();
 }
 
 function frameLoop() : void {
     moverNave();
+    moverDisparos();
     dibujarFondo();
+    dibujarDisparos();
     dibujarNave();
 }
 
