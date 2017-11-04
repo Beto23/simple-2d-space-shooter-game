@@ -38,8 +38,14 @@ gulp.task('sass', function(){
         .pipe(browserSync.stream());        
 });
 
+//Images
+gulp.task('images', function(){
+    return gulp.src(['src/assets/images/*.{png,jpg,jpeg,gif,svg}'])
+        .pipe(gulp.dest('dist/images'))
+});
+
 // Watch & serve
-gulp.task('serve', ['pug','ts', 'sass'], function(){
+gulp.task('serve', ['pug','ts', 'sass', 'images'], function(){
     browserSync.init({
         server: "dist"
     });
