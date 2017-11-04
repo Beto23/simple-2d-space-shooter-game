@@ -11,9 +11,15 @@ const nave = {
     height: 50
 }
 
+let juego = {
+    estado: 'iniciando'
+}
+
 let teclado : any = {}
 //Array para disparos
 let disparos : Array<any> = [];
+//Arreglo que almacena enemigos
+let enemigos : Array<any> = [];
 
 //Definicion de variables para imagenes
 let fondo : any;
@@ -38,6 +44,16 @@ function dibujarNave() : void {
     ctx.restore();
 }
 
+function dibujarEnemigos() : void {
+    for(let i in enemigos) {
+        const enemigo = enemigos[i];
+        ctx.save();
+        if(enemigo.estado === 'vivo') ctx.fillStyle = 'red';
+        if(enemigo.estado === 'muerto') ctx.fillStyle = 'black';
+        ctx.fillRect(enemigo.x, enemigo.y, enemigo.width, enemigo.height);
+    }
+}
+
 function moverNave() : void {
     if(teclado[37]) {
         // Movimiento a la izquierda, disminuye x
@@ -58,6 +74,30 @@ function moverNave() : void {
             teclado.fire = true
         }
     } else teclado.fire = false;
+}
+
+function actualizaEnemigos() {
+    if(juego.estado === 'iniciando') {
+        for(let i = 0; i<10; i++) {
+            enemigos.push({
+                x: 10 + (i*50),
+                y: 10,
+                height: 40,
+                width: 40,
+                estado: 'vivo',
+                contador: 0
+            });
+        }
+        juego.estado = 'jugando';
+    }
+    for(let i in enemigos) {
+        const enemigo = enemigos[i];
+        if(!enemigo) continue;
+        if(enemigo && enemigo.estado === 'vivo') {
+            enemigo.contador++;
+            enemigo.x += Math.sin(enemigo.contador * Math.PI/90)*5;
+        }
+    }
 }
 
 function moverDisparos() : void {
@@ -93,8 +133,10 @@ function dibujarDisparos() : void {
 
 function frameLoop() : void {
     moverNave();
+    actualizaEnemigos();
     moverDisparos();
     dibujarFondo();
+    dibujarEnemigos();
     dibujarDisparos();
     dibujarNave();
 }
