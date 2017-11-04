@@ -77,6 +77,11 @@ function actualizarEstadoJuego() : void {
         textoRespuesta.contador = 0;
     }
     textoRespuesta.contador >= 0 ? textoRespuesta.contador++ : null;
+    if((juego.estado === 'perdido' || juego.estado === 'victoria') && teclado[82]){
+        juego.estado = 'iniciando';
+        nave.estado = 'vivo';
+        textoRespuesta.contador = -1;
+    }
 }
 
 function dibujarFondo() : void {
@@ -160,6 +165,7 @@ function actualizaEnemigos() {
             contador: 0
         }
     }
+    // crear enemigos
     if(juego.estado === 'iniciando') {
         for(let i = 0; i<10; i++) {
             enemigos.push({
