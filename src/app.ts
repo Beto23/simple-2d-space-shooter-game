@@ -11,6 +11,8 @@ const nave = {
     height: 50
 }
 
+let teclado : any = {}
+
 //Definicion de variables para imagenes
 let fondo : any;
 
@@ -34,10 +36,45 @@ function dibujarNave() : void {
     ctx.restore();
 }
 
+function moverNave() : void {
+    if(teclado[37]) {
+        // Movimiento a la izquierda, disminuye x
+        nave.x -= 6;
+        if(nave.x < 0) nave.x = 0 // limite de nave en x lado izquierdo
+    }
+    if(teclado[39]) {
+        // Movimiento a la derecha, aumenta x
+        const limite = canvas.width - nave.width; // limite de nave en x lado derecho
+        nave.x += 6;
+        if(nave.x > limite) nave.x = limite;
+    }
+}
+
 function frameLoop() : void {
+    moverNave();
     dibujarFondo();
     dibujarNave();
 }
 
+function agregarEventosTeclado() : void {
+    agregarEvento(document, 'keydown', (e) => {
+        //ponemos en true la tecla presionada
+        teclado[e.keyCode] = true;
+    });
+    agregarEvento(document, 'keyup', (e) => {
+        //ponemos en false la tecla que dejo de ser presionada
+        teclado[e.keyCode] = false;
+    });
+    function agregarEvento (elemento : any, nombreEvento, f)  {
+        if(elemento.addEventListener) {
+            elemento.addEventListener(nombreEvento,f,false)
+        } else if (elemento.attachEvent) {
+            // internet Explorer
+            elemento.attachEvent(nombreEvento,f)
+        }
+    } 
+}
+
 //Ejecucion de funciones
+agregarEventosTeclado();
 loadMedia();
