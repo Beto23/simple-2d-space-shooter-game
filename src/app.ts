@@ -18,6 +18,7 @@ let juego = {
 let teclado : any = {}
 //Array para disparos
 let disparos : Array<any> = [];
+let disparosEnemigos: Array<any> = [];
 //Arreglo que almacena enemigos
 let enemigos : Array<any> = [];
 
@@ -75,7 +76,34 @@ function moverNave() : void {
     } else teclado.fire = false;
 }
 
+function dibujarDisparosEnemigos() : void{
+    disparosEnemigos.map(disparo => {
+        ctx.save();
+        ctx.fillStyle = 'yellow'
+        ctx.fillRect(disparo.x, disparo.y, disparo.width, disparo.height);
+        ctx.restore();
+    })
+}
+
+function moverDisparosEnemigos() : void {
+    disparosEnemigos.map(disparo => {
+        disparo.y +=3;
+    });
+    disparosEnemigos = disparosEnemigos.filter(disparo => {
+        return disparo.y < canvas.height;
+    })
+}
+
 function actualizaEnemigos() {
+    function agregarDisparosEnemigos(enemigo){
+        return {
+            x: enemigo.x,
+            y: enemigo.y,
+            width: 10,
+            height: 33,
+            contador: 0
+        }
+    }
     if(juego.estado === 'iniciando') {
         for(let i = 0; i<10; i++) {
             enemigos.push({
@@ -95,6 +123,10 @@ function actualizaEnemigos() {
         if(enemigo && enemigo.estado === 'vivo') {
             enemigo.contador++;
             enemigo.x += Math.sin(enemigo.contador * Math.PI/90)*5;
+
+            if(aleatorio(0,enemigos.length * 10) === 4) {
+                disparosEnemigos.push(agregarDisparosEnemigos(enemigo));
+            }
         }
         if(enemigo && enemigo.estado == 'golpeado') {
             enemigo.contador++;
@@ -180,11 +212,20 @@ function frameLoop() : void {
     moverNave();
     actualizaEnemigos();
     moverDisparos();
+    moverDisparosEnemigos();
     dibujarFondo();
     verificarGolpe();
     dibujarEnemigos();
+    dibujarDisparosEnemigos();
     dibujarDisparos();
     dibujarNave();
+}
+
+function aleatorio(inferior, superior) : number {
+    let posibilidades  = superior - inferior;
+    let aleatorio = Math.random() * posibilidades;
+    aleatorio = Math.floor(aleatorio);
+    return parseInt(inferior) + aleatorio;
 }
 
 function agregarEventosTeclado() : void {
