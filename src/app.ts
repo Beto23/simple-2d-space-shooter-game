@@ -202,10 +202,16 @@ function verificarGolpe(): void {
             if(golpear(disparo,enemigo)) {
                 enemigo.estado = 'golpeado';
                 enemigo.contador = 0;
-                console.log('hubo contacto');
             }
         }
     }
+    if(nave.estado === "golpeado" || nave.estado === "muerto") return;
+    disparosEnemigos.map(disparo => {
+        if(golpear(disparo, nave)){
+            nave.estado = 'golpeado';
+            console.log('contacto');
+        }
+    })
 }
 
 function frameLoop() : void {
