@@ -15,6 +15,12 @@ let juego = {
     estado: 'iniciando'
 }
 
+let textoRespuesta = {
+    contador: -1,
+    titulo: '',
+    subtitulo: ''
+}
+
 let teclado : any = {}
 //Array para disparos
 let disparos : Array<any> = [];
@@ -32,6 +38,44 @@ function loadMedia() : void {
     fondo.onload = () => {
         const intervalo = window.setInterval(frameLoop, 1000/55);
     }
+}
+
+function dibujaTexto() : void {
+    if(textoRespuesta.contador === -1) return;
+    const alpha = textoRespuesta.contador/50.0;
+    if(alpha>1) {
+        for(let i in enemigos) {
+            delete enemigos[i];
+        }
+    }
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    if(juego.estado === 'perdido') {
+        ctx.fillStyle = 'white';
+        ctx.font = 'Bold 40pt Arial';
+        ctx.fillText(textoRespuesta.titulo, 140,250);
+        ctx.font = '14pt Arial';
+        ctx.fillText(textoRespuesta.subtitulo, 190, 250);
+        
+    }
+    if(juego.estado === 'victoria') {
+        ctx.fillStyle = 'white';
+        ctx.font = 'Bold 40pt Arial';
+        ctx.fillText(textoRespuesta.titulo, 140,200);
+        ctx.font = '14pt Arial';
+        ctx.fillText(textoRespuesta.subtitulo, 190, 250);
+        
+    }
+}
+
+function actualizarEstadoJuego() : void {
+    if(juego.estado === 'jugando' && enemigos.length == 0){
+        juego.estado = 'victoria';
+        textoRespuesta.titulo = 'Derrotaste a los enemigos';
+        textoRespuesta.subtitulo = 'Presiona la tecla R para reiniciar';
+        textoRespuesta.contador = 0;
+    }
+    textoRespuesta.contador >= 0 ? textoRespuesta.contador++ : null;
 }
 
 function dibujarFondo() : void {
@@ -215,6 +259,7 @@ function verificarGolpe(): void {
 }
 
 function frameLoop() : void {
+    actualizarEstadoJuego();
     moverNave();
     actualizaEnemigos();
     moverDisparos();
@@ -224,6 +269,7 @@ function frameLoop() : void {
     dibujarEnemigos();
     dibujarDisparosEnemigos();
     dibujarDisparos();
+    dibujaTexto();
     dibujarNave();
 }
 
