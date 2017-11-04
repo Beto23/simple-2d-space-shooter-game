@@ -8,7 +8,8 @@ const nave = {
     x: 100,
     y: canvas.height -70,
     width: 50,
-    height: 50
+    height: 50,
+    contador: 0
 }
 
 let juego = {
@@ -53,7 +54,7 @@ function dibujaTexto() : void {
     if(juego.estado === 'perdido') {
         ctx.fillStyle = 'white';
         ctx.font = 'Bold 40pt Arial';
-        ctx.fillText(textoRespuesta.titulo, 140,250);
+        ctx.fillText(textoRespuesta.titulo, 140,200);
         ctx.font = '14pt Arial';
         ctx.fillText(textoRespuesta.subtitulo, 190, 250);
         
@@ -118,6 +119,17 @@ function moverNave() : void {
             teclado.fire = true
         }
     } else teclado.fire = false;
+    if(nave.estado === 'golpeado') {
+        nave.contador++;
+        if(nave.contador >= 20) {
+            nave.contador = 0;
+            nave.estado = 'muerto';
+            juego.estado = 'perdido';
+            textoRespuesta.titulo = 'Game Over';
+            textoRespuesta.subtitulo = 'Presiona la tecla R para continuar';
+            textoRespuesta.contador = 0;
+        }
+    }
 }
 
 function dibujarDisparosEnemigos() : void{
