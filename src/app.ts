@@ -68,7 +68,6 @@ function moverNave() : void {
     }
     if(teclado[32]) {
         //Disparos
-        console.log(teclado);
         if(!teclado.fire) {
             fire();
             teclado.fire = true
@@ -97,6 +96,17 @@ function actualizaEnemigos() {
             enemigo.contador++;
             enemigo.x += Math.sin(enemigo.contador * Math.PI/90)*5;
         }
+        if(enemigo && enemigo.estado == 'golpeado') {
+            enemigo.contador++;
+            if(enemigo.contador >= 20) {
+                enemigo.estado = 'muerto';
+                enemigo.contador = 0;
+            }
+        }
+        enemigos = enemigos.filter(enemigo => {
+            if(enemigo && enemigo.estado != 'muerto') return true;
+            return false;
+        })
     }
 }
 
@@ -131,11 +141,47 @@ function dibujarDisparos() : void {
     ctx.restore();
 }
 
+//algoritmo
+function golpear(a,b) : boolean {
+    let golpear : boolean = false;
+    if(b.x + b.width >= a.x && b.x < a.x + a.width) {
+        if(b.y + b.height >= a.y && b.y  < a.y + a.height){
+            golpear = true;
+        }
+    }
+    if(b.x <= a.x && b.x + b.width >= a.x + a.width) {
+        if(b.y <= a.y && b.y + b.height >= a.y + a.height){
+            golpear = true;
+        }
+    }
+    if(a.x <= b.x && a.x + a.width >= b.x + b.width){
+        if(a.y <= b.y && a.y + a.height >= b.y + b.height){
+            golpear = true;
+        }
+    }
+    return golpear;
+}
+
+function verificarGolpe(): void {
+    for(let i in disparos){
+        const disparo = disparos[i];
+        for(let j in enemigos){
+            const enemigo = enemigos[j];
+            if(golpear(disparo,enemigo)) {
+                enemigo.estado = 'golpeado';
+                enemigo.contador = 0;
+                console.log('hubo contacto');
+            }
+        }
+    }
+}
+
 function frameLoop() : void {
     moverNave();
     actualizaEnemigos();
     moverDisparos();
     dibujarFondo();
+    verificarGolpe();
     dibujarEnemigos();
     dibujarDisparos();
     dibujarNave();
