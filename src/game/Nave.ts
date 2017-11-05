@@ -1,9 +1,9 @@
-import { naveDisparosDO, juegoDO, textoRespuestaDO } from '../shared/displayObjectGame';
+import { naveDisparosDO, juegoDO, textoRespuestaDO, naveDO } from '../shared/displayObjectGame';
 import { golpear } from '../shared/golpear';
 
 
 export class Nave {
-    nave: any;
+    nave: naveDO;
     ctx: any;
     teclado: any;
     canvas: any;

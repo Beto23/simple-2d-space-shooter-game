@@ -60,6 +60,11 @@ function actualizarEstadoJuego() : void {
         textoRespuesta.contador = 0;
     }
     textoRespuesta.contador >= 0 ? textoRespuesta.contador++ : null;
+    if((juego.estado === 'perdido' || juego.estado === 'victoria') && teclado[82]){
+        juego.estado = 'iniciando';
+        nave.nave.estado = 'vivo';
+        textoRespuesta.contador = -1;
+    }
 }
 
 function frameLoop() : void {

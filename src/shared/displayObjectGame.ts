@@ -4,7 +4,7 @@ export interface naveDO {
     width: number,
     height: number,
     contador: number,
-    estatus?: string
+    estado?: string
 }
 
 export interface naveDisparosDO {
