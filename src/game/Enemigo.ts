@@ -1,5 +1,5 @@
 import { juegoDO, enemigoDO, naveDisparosDO } from '../shared/displayObjectGame';
-import { golpear } from './golpear';
+import { golpear } from '../shared/golpear';
 import { aleatorio } from '../shared/getNumeroAleatorio';
 
 
@@ -77,7 +77,6 @@ export class Enemigo {
                 if(golpear(disparo,enemigo)) {
                     enemigo.estado = 'golpeado';
                     enemigo.contador = 0;
-                    console.log('hubo contacto');
                 }
             });
         });
