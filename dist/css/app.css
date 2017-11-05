@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Orbitron");
+/* line 2, src/app.scss */
+body {
+  background: black;
+  color: #10f708; }
+
+/* line 7, src/app.scss */
+h1 {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 5px; }
+
+/* line 12, src/app.scss */
+.canvas {
+  border: solid;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  display: block; }
+
+/* line 21, src/app.scss */
+.enemigos {
+  display: none; }
