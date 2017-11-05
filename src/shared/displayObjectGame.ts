@@ -13,3 +13,16 @@ export interface naveDisparosDO {
     width: number,
     height: number
 }
+
+export interface juegoDO {
+    estado: string;
+}
+
+export interface enemigoDO {
+    x: number,
+    y: number,
+    height: number,
+    width: number,
+    estado: string,
+    contador: number
+}
