@@ -6,3 +6,10 @@ export interface naveDO {
     contador: number,
     estatus?: string
 }
+
+export interface naveDisparosDO {
+    x: number
+    y: number
+    width: number,
+    height: number
+}

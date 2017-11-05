@@ -36,9 +36,11 @@ function dibujarFondo() : void {
 }
 
 function frameLoop() : void {
-    dibujarFondo();
-    nave.dibujarNave();
     nave.moverNave();
+    nave.moverDisparos();
+    dibujarFondo();
+    nave.dibujarDisparos();
+    nave.dibujarNave();
 }
 
 //Ejecucion de funciones

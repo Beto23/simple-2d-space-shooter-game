@@ -1,8 +1,12 @@
+import { naveDisparosDO } from '../shared/displayObjectGame';
+
 export class Nave {
     nave: any;
     ctx: any;
     teclado: any;
     canvas: any;
+    disparos : Array<naveDisparosDO> = [];
+
     constructor(canvas: any, ctx:any, nave:any, teclado: any){
         this.nave = nave;
         this.ctx = ctx;
@@ -29,5 +33,41 @@ export class Nave {
             this.nave.x += 6;
             if(this.nave.x > limite) this.nave.x = limite;
         }
+        if(this.teclado[32]) {
+            //Disparos
+            if(!this.teclado.fire) {
+                this.fire();
+                this.teclado.fire = true
+            }
+        } else this.teclado.fire = false;
+    }
+
+    //Disparos
+    moverDisparos() : void {
+        this.disparos.map(disparo => {
+            disparo.y -=2;
+        });
+        //Elimina disparo en posicion 0 en y
+        this.disparos = this.disparos.filter(disparo => {
+            return disparo.y > 0;
+        });
+    }
+
+    dibujarDisparos() : void {
+        this.ctx.save();
+        this.ctx.fillStyle = 'white';
+        this.disparos.map(disparo => {
+            this.ctx.fillRect(disparo.x, disparo.y, disparo.width, disparo.height)
+        });
+        this.ctx.restore();
+    }
+
+    private fire() {
+        this.disparos.push({
+            x: this.nave.x + 20,
+            y: this.nave.y -10,
+            width: 10,
+            height: 30
+        })
     }
 } 
