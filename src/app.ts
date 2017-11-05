@@ -1,7 +1,6 @@
 // Objetos importantes de canvas
 const canvas : any = document.getElementById('main');
 const ctx = canvas.getContext('2d');
-console.log(ctx);
 
 // creando objeto de la nave (class)
 const nave = {
@@ -9,7 +8,8 @@ const nave = {
     y: canvas.height -70,
     width: 50,
     height: 50,
-    contador: 0
+    contador: 0,
+    estado: undefined
 }
 
 let juego = {
