@@ -7,6 +7,7 @@ export class Nave {
     ctx: any;
     teclado: any;
     canvas: any;
+    naveEspacial = document.getElementById("nave");
 
     constructor(canvas: any, ctx:any, nave:any, teclado: any){
         this.nave = nave;
@@ -18,7 +19,7 @@ export class Nave {
     dibujarNave() : void {
         this.ctx.save();
         this.ctx.fillStyle = 'white';
-        this.ctx.fillRect(this.nave.x, this.nave.y, this.nave.width, this.nave.height);
+        this.ctx.drawImage(this.naveEspacial, this.nave.x, this.nave.y, this.nave.width, this.nave.height);
         this.ctx.restore();
     }
 
