@@ -52,6 +52,7 @@ function frameLoop() : void {
     dibujarFondo();
     enemigo.dibujarEnemigos();
     enemigo.verificarGolpe();
+    nave.verificarGolpe();
     enemigo.dibujarEnemigos();
     enemigo.dibujarDisparosEnemigos();
     nave.dibujarDisparos();

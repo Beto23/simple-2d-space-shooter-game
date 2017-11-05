@@ -1,4 +1,6 @@
 import { naveDisparosDO } from '../shared/displayObjectGame';
+import { golpear } from '../shared/golpear';
+
 
 export class Nave {
     nave: any;
@@ -60,6 +62,16 @@ export class Nave {
         });
         this.ctx.restore();
     }
+
+    verificarGolpe() : void {
+        if(this.nave.estado === "golpeado" || this.nave.estado === "muerto") return;
+        (<any>window).disparosEnemigos.map((disparo: naveDisparosDO) => {
+            if(golpear(disparo, this.nave)){
+                this.nave.estado = 'golpeado';
+                console.log('contacto');
+            }
+        })
+    } 
 
     private fire() {
         (<any>window).disparos.push({
