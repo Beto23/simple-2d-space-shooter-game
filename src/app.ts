@@ -1,4 +1,7 @@
-import { Nave }  from './game/Nave';
+import {
+    Nave,
+    agregarEventosTeclado
+}  from './game/';
 import { naveDO } from './shared/displayObjectGame';
 // Objetos importantes de canvas
 const canvas : any = document.getElementById('main');
@@ -13,10 +16,11 @@ const naveObject : naveDO = {
     contador: 0,
 }  
 
-const nave = new Nave(naveObject, ctx);
-
 //Definicion de variables para imagenes
 let fondo : any;
+let teclado : any = {};
+
+const nave = new Nave(canvas, ctx, naveObject, teclado);
 
 //Definicion de funciones
 function loadMedia() : void {
@@ -34,7 +38,9 @@ function dibujarFondo() : void {
 function frameLoop() : void {
     dibujarFondo();
     nave.dibujarNave();
+    nave.moverNave();
 }
 
 //Ejecucion de funciones
+agregarEventosTeclado(teclado);
 loadMedia();
