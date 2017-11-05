@@ -3,7 +3,7 @@ import {
     Enemigo,
     agregarEventosTeclado
 }  from './game/';
-import { naveDO, juegoDO } from './shared/displayObjectGame';
+import { naveDO, juegoDO, naveDisparosDO } from './shared/displayObjectGame';
 // Objetos importantes de canvas
 const canvas : any = document.getElementById('main');
 const ctx = canvas.getContext('2d');
@@ -24,6 +24,8 @@ let juego : juegoDO = {
 //Definicion de variables para imagenes
 let fondo : any;
 let teclado : any = {};
+
+(<any>window).disparos = [];
 
 const nave = new Nave(canvas, ctx, naveObject, teclado);
 const enemigo = new Enemigo(ctx);
@@ -47,6 +49,7 @@ function frameLoop() : void {
     nave.moverDisparos();
     dibujarFondo();
     enemigo.dibujarEnemigos();
+    enemigo.verificarGolpe();
     enemigo.dibujarEnemigos();
     nave.dibujarDisparos();
     nave.dibujarNave();

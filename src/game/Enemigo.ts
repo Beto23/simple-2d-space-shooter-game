@@ -1,4 +1,5 @@
-import { juegoDO, enemigoDO } from '../shared/displayObjectGame';
+import { juegoDO, enemigoDO, naveDisparosDO } from '../shared/displayObjectGame';
+import { golpear } from './golpear';
 
 
 export class Enemigo {
@@ -40,6 +41,30 @@ export class Enemigo {
                 enemigo.contador++;
                 enemigo.x += Math.sin(enemigo.contador * Math.PI/90)*5;
             }
+
+            if(enemigo && enemigo.estado == 'golpeado') {
+                enemigo.contador++;
+                if(enemigo.contador >= 20) {
+                    enemigo.estado = 'muerto';
+                    enemigo.contador = 0;
+                }
+            }
+            this.enemigos = this.enemigos.filter(enemigo => {
+                if(enemigo && enemigo.estado != 'muerto') return true;
+                return false;
+            });
         }
+    }
+
+    verificarGolpe() : void {
+        (<any>window).disparos.map((disparo:naveDisparosDO) => {
+            this.enemigos.map(enemigo => {
+                if(golpear(disparo,enemigo)) {
+                    enemigo.estado = 'golpeado';
+                    enemigo.contador = 0;
+                    console.log('hubo contacto');
+                }
+            });
+        });
     }
 }

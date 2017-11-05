@@ -5,7 +5,6 @@ export class Nave {
     ctx: any;
     teclado: any;
     canvas: any;
-    disparos : Array<naveDisparosDO> = [];
 
     constructor(canvas: any, ctx:any, nave:any, teclado: any){
         this.nave = nave;
@@ -44,11 +43,11 @@ export class Nave {
 
     //Disparos
     moverDisparos() : void {
-        this.disparos.map(disparo => {
+        (<any>window).disparos.map((disparo:naveDisparosDO) => {
             disparo.y -=2;
         });
         //Elimina disparo en posicion 0 en y
-        this.disparos = this.disparos.filter(disparo => {
+        (<any>window).disparos = (<any>window).disparos.filter((disparo:naveDisparosDO) => {
             return disparo.y > 0;
         });
     }
@@ -56,14 +55,14 @@ export class Nave {
     dibujarDisparos() : void {
         this.ctx.save();
         this.ctx.fillStyle = 'white';
-        this.disparos.map(disparo => {
+        (<any>window).disparos.map((disparo:naveDisparosDO) => {
             this.ctx.fillRect(disparo.x, disparo.y, disparo.width, disparo.height)
         });
         this.ctx.restore();
     }
 
     private fire() {
-        this.disparos.push({
+        (<any>window).disparos.push({
             x: this.nave.x + 20,
             y: this.nave.y -10,
             width: 10,
