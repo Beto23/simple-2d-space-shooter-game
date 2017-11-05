@@ -1,3 +1,5 @@
+import { sayHello } from './game/Nave';
+console.log(sayHello("beto"));
 // Objetos importantes de canvas
 const canvas : any = document.getElementById('main');
 const ctx = canvas.getContext('2d');
