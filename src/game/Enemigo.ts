@@ -16,7 +16,7 @@ export class Enemigo {
     dibujarEnemigos() : void {
         this.enemigos.map(enemigo => {
             this.ctx.save();
-            enemigo.estado === 'vivo' ? this.ctx.fillStyle = 'red' : null;
+            enemigo.estado === 'vivo' ? this.ctx.fillStyle = enemigo.type : null;
             enemigo.estado === 'muerto' ? this.ctx.fillStyle = 'black' : null; 
             this.ctx.fillRect(enemigo.x, enemigo.y, enemigo.width, enemigo.height);           
         });
@@ -35,13 +35,20 @@ export class Enemigo {
         // crear enemigos
         if(juego.estado === 'iniciando') {
             for(let i = 0; i<10; i++) {
+                let color = 'red';
+                if(i >= 0 && i<= 3) {
+                    color = 'blue'
+                } else if (i>3 && i<=6) {
+                    color = 'green';
+                }
                 this.enemigos.push({
                     x: 10 + (i*50),
                     y: 10,
                     height: 40,
                     width: 40,
                     estado: 'vivo',
-                    contador: 0
+                    contador: 0,
+                    type: color
                 });
             }
             juego.estado = 'jugando';
@@ -56,10 +63,10 @@ export class Enemigo {
                     (<any>window).disparosEnemigos.push(agregarDisparosEnemigos(enemigo));
                 }
             }
-
+            //Eliminar enemigos
             if(enemigo && enemigo.estado == 'golpeado') {
                 enemigo.contador++;
-                if(enemigo.contador >= 20) {
+                if(enemigo.contador >= 2) {
                     enemigo.estado = 'muerto';
                     enemigo.contador = 0;
                 }
