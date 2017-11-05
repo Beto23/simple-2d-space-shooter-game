@@ -26,3 +26,9 @@ export interface enemigoDO {
     estado: string,
     contador: number
 }
+
+export interface textoRespuestaDO {
+    contador: number,
+    titulo: string,
+    subtitulo: string
+}

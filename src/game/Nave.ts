@@ -1,4 +1,4 @@
-import { naveDisparosDO } from '../shared/displayObjectGame';
+import { naveDisparosDO, juegoDO, textoRespuestaDO } from '../shared/displayObjectGame';
 import { golpear } from '../shared/golpear';
 
 
@@ -22,7 +22,7 @@ export class Nave {
         this.ctx.restore();
     }
 
-    moverNave() : void {
+    moverNave(juego: juegoDO, textoRespuesta: textoRespuestaDO) : void {
         if(this.teclado[37]) {
             // Movimiento a la izquierda, disminuye x
             this.nave.x -= 6;
@@ -41,6 +41,17 @@ export class Nave {
                 this.teclado.fire = true
             }
         } else this.teclado.fire = false;
+        if(this.nave.estado === 'golpeado') {
+            this.nave.contador++;
+            if(this.nave.contador >= 20) {
+                this.nave.contador = 0;
+                this.nave.estado = 'muerto';
+                juego.estado = 'perdido';
+                textoRespuesta.titulo = 'Game Over';
+                textoRespuesta.subtitulo = 'Presiona la tecla R para continuar';
+                textoRespuesta.contador = 0;
+            }
+        }
     }
 
     //Disparos

@@ -64,7 +64,7 @@ function actualizarEstadoJuego() : void {
 
 function frameLoop() : void {
     actualizarEstadoJuego();
-    nave.moverNave();
+    nave.moverNave(juego,textoRespuesta);
     enemigo.actualizaEnemigos(juego);
     nave.moverDisparos();
     enemigo.moverDisparosEnemigos();

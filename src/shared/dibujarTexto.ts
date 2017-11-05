@@ -1,4 +1,6 @@
-export function dibujaTexto(ctx, textoRespuesta, juego , enemigos) : void {
+import { juegoDO, textoRespuestaDO, enemigoDO } from './displayObjectGame';
+
+export function dibujaTexto(ctx: any, textoRespuesta: textoRespuestaDO, juego: juegoDO , enemigos: Array<enemigoDO>) : void {
     if(textoRespuesta.contador === -1) return;
     const alpha = textoRespuesta.contador/50.0;
     if(alpha>1) {
@@ -11,7 +13,7 @@ export function dibujaTexto(ctx, textoRespuesta, juego , enemigos) : void {
     if(juego.estado === 'perdido') {
         ctx.fillStyle = 'white';
         ctx.font = 'Bold 40pt Arial';
-        ctx.fillText(textoRespuesta.titulo, 140,250);
+        ctx.fillText(textoRespuesta.titulo, 140,200);
         ctx.font = '14pt Arial';
         ctx.fillText(textoRespuesta.subtitulo, 190, 250);
         
