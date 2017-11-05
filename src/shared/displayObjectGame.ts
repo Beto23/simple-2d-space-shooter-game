@@ -25,7 +25,7 @@ export interface enemigoDO {
     width: number,
     estado: string,
     contador: number,
-    type?: string
+    type?: any
 }
 
 export interface textoRespuestaDO {

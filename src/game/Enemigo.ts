@@ -7,18 +7,22 @@ export class Enemigo {
     enemigos : Array<enemigoDO> = []
     ctx : any;
     canvas: any;
+    enemigo1 = document.getElementById("e1");
+    enemigo2 = document.getElementById("e2");
+    enemigo3 = document.getElementById("e3");
 
     constructor(ctx: any, canvas: any){
         this.ctx = ctx;
         this.canvas = canvas;
     }
 
-    dibujarEnemigos() : void {
+    dibujarEnemigos() : void {     
         this.enemigos.map(enemigo => {
             this.ctx.save();
             enemigo.estado === 'vivo' ? this.ctx.fillStyle = enemigo.type : null;
             enemigo.estado === 'muerto' ? this.ctx.fillStyle = 'black' : null; 
-            this.ctx.fillRect(enemigo.x, enemigo.y, enemigo.width, enemigo.height);           
+            this.ctx.drawImage(enemigo.type, enemigo.x, enemigo.y, enemigo.width, enemigo.height);
+            this.ctx.restore();           
         });
     }
 
@@ -35,11 +39,11 @@ export class Enemigo {
         // crear enemigos
         if(juego.estado === 'iniciando') {
             for(let i = 0; i<10; i++) {
-                let color = 'red';
+                let tipoEnemigo = this.enemigo1;
                 if(i >= 0 && i<= 3) {
-                    color = 'blue'
+                    tipoEnemigo = this.enemigo2;
                 } else if (i>3 && i<=6) {
-                    color = 'green';
+                    tipoEnemigo = this.enemigo3;
                 }
                 this.enemigos.push({
                     x: 10 + (i*50),
@@ -48,7 +52,7 @@ export class Enemigo {
                     width: 40,
                     estado: 'vivo',
                     contador: 0,
-                    type: color
+                    type: tipoEnemigo
                 });
             }
             juego.estado = 'jugando';
