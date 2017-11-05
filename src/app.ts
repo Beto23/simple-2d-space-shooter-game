@@ -26,9 +26,10 @@ let fondo : any;
 let teclado : any = {};
 
 (<any>window).disparos = [];
+(<any>window).disparosEnemigos = [];
 
 const nave = new Nave(canvas, ctx, naveObject, teclado);
-const enemigo = new Enemigo(ctx);
+const enemigo = new Enemigo(ctx, canvas);
 
 //Definicion de funciones
 function loadMedia() : void {
@@ -47,10 +48,12 @@ function frameLoop() : void {
     nave.moverNave();
     enemigo.actualizaEnemigos(juego);
     nave.moverDisparos();
+    enemigo.moverDisparosEnemigos();
     dibujarFondo();
     enemigo.dibujarEnemigos();
     enemigo.verificarGolpe();
     enemigo.dibujarEnemigos();
+    enemigo.dibujarDisparosEnemigos();
     nave.dibujarDisparos();
     nave.dibujarNave();
 }
