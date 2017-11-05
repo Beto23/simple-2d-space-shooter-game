@@ -4,6 +4,8 @@ import {
     agregarEventosTeclado
 }  from './game/';
 import { naveDO, juegoDO, naveDisparosDO } from './shared/displayObjectGame';
+import { dibujaTexto } from './shared/dibujarTexto';
+
 // Objetos importantes de canvas
 const canvas : any = document.getElementById('main');
 const ctx = canvas.getContext('2d');
@@ -15,6 +17,12 @@ const naveObject : naveDO = {
     width: 50,
     height: 50,
     contador: 0,
+}
+
+let textoRespuesta = {
+    contador: -1,
+    titulo: '',
+    subtitulo: ''
 }
 
 let juego : juegoDO = {
@@ -44,7 +52,18 @@ function dibujarFondo() : void {
     ctx.drawImage(fondo,0,0)
 }
 
+function actualizarEstadoJuego() : void {
+    if(juego.estado === 'jugando' && enemigo.enemigos.length == 0){
+        juego.estado = 'victoria';
+        textoRespuesta.titulo = 'Derrotaste a los enemigos';
+        textoRespuesta.subtitulo = 'Presiona la tecla R para reiniciar';
+        textoRespuesta.contador = 0;
+    }
+    textoRespuesta.contador >= 0 ? textoRespuesta.contador++ : null;
+}
+
 function frameLoop() : void {
+    actualizarEstadoJuego();
     nave.moverNave();
     enemigo.actualizaEnemigos(juego);
     nave.moverDisparos();
@@ -56,6 +75,7 @@ function frameLoop() : void {
     enemigo.dibujarEnemigos();
     enemigo.dibujarDisparosEnemigos();
     nave.dibujarDisparos();
+    dibujaTexto(ctx,textoRespuesta,juego,enemigo.enemigos);
     nave.dibujarNave();
 }
 
