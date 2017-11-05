@@ -22,4 +22,4 @@ Mover nave: Teclas izquierda y derecha.
 Disparar: Tecla espaciadora.
 ```
 
-
+Referencias: w3schools - codigo facilíto canvas
